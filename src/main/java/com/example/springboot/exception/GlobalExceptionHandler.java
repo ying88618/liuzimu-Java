@@ -1,0 +1,21 @@
+package com.example.springboot.exception;
+
+import com.example.springboot.pojo.Result;
+import com.example.springboot.utils.BusinessException;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(Exception.class)
+    public Result handleException(Exception e) {
+        e.printStackTrace();
+        return Result.error(StringUtils.hasLength(e.getMessage()) ? e.getMessage() : "操作失败");
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public Result handleBusinessExeption(BusinessException e){
+        return Result.error(e.getMessage());
+    }
+}
